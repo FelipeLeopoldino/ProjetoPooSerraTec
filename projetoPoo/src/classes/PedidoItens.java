@@ -1,6 +1,5 @@
 package classes;
 
-
 public class PedidoItens extends Produto {
 
 	private int idPedidoItem;

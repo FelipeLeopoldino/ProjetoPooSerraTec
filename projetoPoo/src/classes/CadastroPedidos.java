@@ -6,7 +6,7 @@ import java.util.Date;
 public class CadastroPedidos {
 
 	private ArrayList<Pedido> listaPedidos;
-
+	
 	public CadastroPedidos() {
 		this.listaPedidos = new ArrayList<>();
 	}
@@ -14,14 +14,17 @@ public class CadastroPedidos {
 	public void incluirPedido(Pedido pedido) {
 		listaPedidos.add(pedido);
 	}
-
-	public void alterarPedido(int idpedido, Date dtemissao, Date dtentrega, double valortotal, String observacao) {
+	
+	public void alterarPedido(int idpedido, Date dtemissao, Date dtentrega, double valortotal , Cliente cliente,  Produto produto) {
 		Pedido pedido = buscarPedidoPorId(idpedido);
+		
 		if (pedido != null) {
-			pedido.setDtemissao(dtemissao);
-			pedido.setDtentrega(dtentrega);
-			pedido.setValortotal(valortotal);
-			pedido.setObservacao(observacao);
+			pedido.setdtEmissao(dtemissao);
+			pedido.setdtEntrega(dtentrega);
+			pedido.setvalorTotal(valortotal);
+			cliente.setidCliente(idpedido);
+			produto.setIdProduto(idpedido);
+			
 		}
 	}
 
@@ -32,38 +35,38 @@ public class CadastroPedidos {
 		}
 	}
 
-	public void imprimirPedidoSemProdutos(int idpedido) {
+	public void imprimirPedidoSemProdutos(int idpedido, Cliente cliente) {
 		Pedido pedido = buscarPedidoPorId(idpedido);
 		if (pedido != null) {
-			System.out.println("Pedido #" + pedido.getIdpedido());
-			System.out.println("Data de emissão: " + pedido.getDtemissao());
-			System.out.println("Data de entrega: " + pedido.getDtentrega());
-			System.out.println("Valor total: " + pedido.getValortotal());
+			System.out.println("Pedido #" + pedido.getidPedido());
+			System.out.println("Data de emissão: " + pedido.getdtEmissao());
+			System.out.println("Data de entrega: " + pedido.getdtEntrega());
+			System.out.println("Valor total: " + pedido.getvalorTotal());
 			System.out.println("Observação: " + pedido.getObservacao());
-			System.out.println("Cliente: " + pedido.getCliente().getNome());
+			System.out.println("Cliente: " + cliente.getNome());
 		}
 	}
 
-	public void imprimirPedidoComProdutos(int idpedido) {
+	public void imprimirPedidoComProdutos(int idpedido , Cliente cliente) {
 		Pedido pedido = buscarPedidoPorId(idpedido);
 		if (pedido != null) {
-			System.out.println("Pedido #" + pedido.getIdpedido());
-			System.out.println("Data de emissão: " + pedido.getDtemissao());
-			System.out.println("Data de entrega: " + pedido.getDtentrega());
-			System.out.println("Valor total: " + pedido.getValortotal());
+			System.out.println("Pedido #" + pedido.getidPedido());
+			System.out.println("Data de emissão: " + pedido.getdtEmissao());
+			System.out.println("Data de entrega: " + pedido.getdtEntrega());
+			System.out.println("Valor total: " + pedido.getvalorTotal());
 			System.out.println("Observação: " + pedido.getObservacao());
-			System.out.println("Cliente: " + pedido.getCliente().getNome());
+			System.out.println("Cliente: " + cliente.getNome());
 			System.out.println("Produtos: ");
 			for (PedidoItens item : pedido.getListaItens()) {
-				System.out.println("- " + item.getProduto().getDescricao() + " x " + item.getQtproduto());
+				System.out.println("- " + item.getDescricao() + " x " + item.getqtProduto());
 			}
 		}
 	}
 
-	public ArrayList<Pedido> buscarPedidosPorCliente(String nomeCliente) {
+	public ArrayList<Pedido> buscarPedidosPorCliente(String nomeCliente, Cliente cliente) {
 		ArrayList<Pedido> pedidosEncontrados = new ArrayList<>();
 		for (Pedido pedido : listaPedidos) {
-			if (pedido.getCliente().getNome().equalsIgnoreCase(nomeCliente)) {
+			if (cliente.getNome().equalsIgnoreCase(nomeCliente)) {
 				pedidosEncontrados.add(pedido);
 			}
 		}
@@ -73,7 +76,7 @@ public class CadastroPedidos {
 	public ArrayList<Pedido> buscarPedidosPorData(Date dataInicio, Date dataFim) {
 		ArrayList<Pedido> pedidosEncontrados = new ArrayList<>();
 		for (Pedido pedido : listaPedidos) {
-			if (pedido.getDtemissao().after(dataInicio) && pedido.getDtemissao().before(dataFim)) {
+			if (pedido.getdtEmissao().after(dataInicio) && pedido.getdtEmissao().before(dataFim)) {
 				pedidosEncontrados.add(pedido);
 			}
 		}
@@ -82,7 +85,7 @@ public class CadastroPedidos {
 
 	public Pedido buscarPedidoPorId(int idpedido) {
 		for (Pedido pedido : listaPedidos) {
-			if (pedido.getIdpedido() == idpedido) {
+			if (pedido.getidPedido() == idpedido) {
 				return pedido;
 			}
 		}

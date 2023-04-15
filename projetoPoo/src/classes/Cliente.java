@@ -2,25 +2,25 @@ package classes;
 
 import java.util.Date;
 
-public class Cliente {
+public class Cliente extends Pessoa {
 
 	private int idCliente;
-	private String nome;
-	private String cpf;
-	private Date dtNascimento;
 	private String endereco;
 	private String telefone;
 
-	public Cliente(int idCliente, String nome, String cpf, Date dtNascimento, String endereco, String telefone) {
+	public Cliente(String nome, String cpf, Date dtNascimento, int idCliente, String endereco, String telefone) {
+		super(nome, cpf, dtNascimento);
 		this.idCliente = idCliente;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.dtNascimento = dtNascimento;
 		this.endereco = endereco;
 		this.telefone = telefone;
 	}
 
-	// getters e setters
+	@Override
+	public String toString() {
+		return "Cliente [idCliente=" + idCliente + ", endereco=" + endereco + ", telefone=" + telefone + ", nome="
+				+ nome + ", cpf=" + cpf + ", dtNascimento=" + dtNascimento + "]";
+	}
+
 	public int getidCliente() {
 		return idCliente;
 	}
