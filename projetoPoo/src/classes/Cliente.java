@@ -4,29 +4,29 @@ import java.util.Date;
 
 public class Cliente {
 
-	private int idcliente;
+	private int idCliente;
 	private String nome;
 	private String cpf;
-	private Date dtnascimento;
+	private Date dtNascimento;
 	private String endereco;
 	private String telefone;
 
-	public Cliente(int idcliente, String nome, String cpf, Date dtnascimento, String endereco, String telefone) {
-		this.idcliente = idcliente;
+	public Cliente(int idCliente, String nome, String cpf, Date dtNascimento, String endereco, String telefone) {
+		this.idCliente = idCliente;
 		this.nome = nome;
 		this.cpf = cpf;
-		this.dtnascimento = dtnascimento;
+		this.dtNascimento = dtNascimento;
 		this.endereco = endereco;
 		this.telefone = telefone;
 	}
 
 	// getters e setters
-	public int getIdcliente() {
-		return idcliente;
+	public int getidCliente() {
+		return idCliente;
 	}
 
-	public void setIdcliente(int idcliente) {
-		this.idcliente = idcliente;
+	public void setidCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	public String getNome() {
@@ -45,12 +45,12 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public Date getDtnascimento() {
-		return dtnascimento;
+	public Date getdtNascimento() {
+		return dtNascimento;
 	}
 
-	public void setDtnascimento(Date dtnascimento) {
-		this.dtnascimento = dtnascimento;
+	public void setdtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
 	}
 
 	public String getEndereco() {

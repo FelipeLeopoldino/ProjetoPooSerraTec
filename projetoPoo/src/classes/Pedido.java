@@ -2,52 +2,56 @@ package classes;
 
 import java.util.Date;
 
-public class Pedido {
+public class Pedido extends PedidoItens {
 
-	private int idpedido;
-	private Date dtemissao;
-	private Date dtentrega;
-	private double valortotal;
-	private String observacao;
+	private int idPedido;
+	private Date dtEmissao;
+	private Date deEntrega;
 
-	public Pedido(int idpedido, Date dtemissao, Date dtentrega, double valortotal, String observacao) {
-		this.idpedido = idpedido;
-		this.dtemissao = dtemissao;
-		this.dtentrega = dtentrega;
-		this.valortotal = valortotal;
+	public Pedido(int idProduto, String descricao, double vlCusto, double vlVenda, String categoria, int idPedidoItem,
+			double vlUnitario, int qtProduto, double vlDesconto, int idPedido, Date dtEmissao, Date deEntrega,
+			double valorTotal, String observacao) {
+		super(idProduto, descricao, vlCusto, vlVenda, categoria, idPedidoItem, vlUnitario, qtProduto, vlDesconto);
+		this.idPedido = idPedido;
+		this.dtEmissao = dtEmissao;
+		this.deEntrega = deEntrega;
+		this.valorTotal = valorTotal;
 		this.observacao = observacao;
 	}
 
-	public int getIdpedido() {
-		return idpedido;
+	private double valorTotal;
+	private String observacao;
+
+	public int getidPedido() {
+		return idPedido;
 	}
 
-	public void setIdpedido(int idpedido) {
-		this.idpedido = idpedido;
+	public void setidPedido(int idPedido) {
+		this.idPedido = idPedido;
 	}
 
-	public Date getDtemissao() {
-		return dtemissao;
+	public Date getdtEmissao() {
+		return dtEmissao;
 	}
 
-	public void setDtemissao(Date dtemissao) {
-		this.dtemissao = dtemissao;
+	public void setdtEmissao(Date dtEmissao) {
+		this.dtEmissao = dtEmissao;
 	}
 
-	public Date getDtentrega() {
-		return dtentrega;
+	public Date getdeEntrega() {
+		return deEntrega;
 	}
 
-	public void setDtentrega(Date dtentrega) {
-		this.dtentrega = dtentrega;
+	public void setdeEntrega(Date deEntrega) {
+		this.deEntrega = deEntrega;
 	}
 
-	public double getValortotal() {
-		return valortotal;
+	public double getvalorTotal() {
+		return valorTotal;
 	}
 
-	public void setValortotal(double valortotal) {
-		this.valortotal = valortotal;
+	public void setvalorTotal(double valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 
 	public String getObservacao() {

@@ -1,8 +1,6 @@
 package classes;
 
-import java.util.Date;
-
-public class Produto extends Pedido {
+public class Produto {
 
 	private int idProduto;
 	private String descricao;
@@ -10,9 +8,7 @@ public class Produto extends Pedido {
 	private double vlVenda;
 	private String categoria;
 
-	public Produto(int idpedido, Date dtemissao, Date dtentrega, double valortotal, String observacao, int idProduto,
-			String descricao, double vlCusto, double vlVenda, String categoria) {
-		super(idpedido, dtemissao, dtentrega, valortotal, observacao);
+	public Produto(int idProduto, String descricao, double vlCusto, double vlVenda, String categoria) {
 		this.idProduto = idProduto;
 		this.descricao = descricao;
 		this.vlCusto = vlCusto;
