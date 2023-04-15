@@ -2,7 +2,7 @@ package classes;
 
 import java.util.Date;
 
-public abstract class Cliente {
+public class Cliente {
 
 	private int idcliente;
 	private String nome;
