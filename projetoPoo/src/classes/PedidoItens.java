@@ -47,4 +47,6 @@ public class PedidoItens extends Produto {
 	public void setvlDesconto(double vlDesconto) {
 		this.vlDesconto = vlDesconto;
 	}
+
+	
 }
