@@ -1,4 +1,4 @@
-package dao;
+package classes.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +21,6 @@ public class CreateDAO {
 
 			if (criarSchema(conexao, schema)) {
 				criarEntidadeCliente(conexao, schema);
-//				criarEntidadeFornecedor(conexao, schema);// duvida se é para fazer a tabela pessoa??
 				criarEntidadeProduto(conexao, schema);
 				criarEntidadePedido(conexao, schema);
 				criarEntidadePedidoItem(conexao, schema);
@@ -69,7 +68,7 @@ public class CreateDAO {
 					tentativas++;
 				}
 			} catch (Exception e) {
-				System.err.printf("N�o foi poss�vel criar o database %s: %s", bd, e);
+				System.err.printf("Não foi possível criar o database %s: %s", bd, e);
 				e.printStackTrace();
 				return false;
 			}
@@ -149,22 +148,6 @@ public class CreateDAO {
 			criarCampo(con, schema, entidade, "telefone", "varchar(20)", false, false, null, null);
 		}
 	}
-
-//	private static void criarEntidadeFornecedor(Conexao con, String schema) {
-//		String entidade = "fornecedor";
-//
-//		if (!entidadeExists(con, schema, entidade))
-//			criarTabela(con, entidade, schema);
-//
-//		if (entidadeExists(con, schema, entidade)) {
-//			criarCampo(con, schema, entidade, "idfornecedor", "serial", true, false, null, null);
-//			criarCampo(con, schema, entidade, "razaosocial", "varchar(100)", false, false, null, null);
-//			criarCampo(con, schema, entidade, "nmfantasia", "varchar(100)", false, false, null, null);
-//			criarCampo(con, schema, entidade, "cnpj", "varchar(14)", false, false, null, null);
-//			criarCampo(con, schema, entidade, "endereco", "varchar(150)", false, false, null, null);
-//
-//		}
-//	}
 
 	private static void criarEntidadeProduto(Conexao con, String schema) {
 		String entidade = "produto";

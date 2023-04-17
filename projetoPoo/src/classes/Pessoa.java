@@ -2,7 +2,7 @@ package classes;
 
 import java.util.Calendar;
 
-public abstract class Pessoa {
+abstract class Pessoa {
 
 	protected int idPessoa;
 	protected String nome;
