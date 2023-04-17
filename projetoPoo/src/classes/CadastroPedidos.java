@@ -6,7 +6,7 @@ import java.util.Date;
 public class CadastroPedidos {
 
 	private ArrayList<Pedido> listaPedidos;
-	
+
 	public CadastroPedidos() {
 		this.listaPedidos = new ArrayList<>();
 	}
@@ -14,17 +14,18 @@ public class CadastroPedidos {
 	public void incluirPedido(Pedido pedido) {
 		listaPedidos.add(pedido);
 	}
-	
-	public void alterarPedido(int idpedido, Date dtemissao, Date dtentrega, double valortotal , Cliente cliente,  Produto produto) {
+
+	public void alterarPedido(int idpedido, Date dtemissao, Date dtentrega, double valortotal, Cliente cliente,
+			Produto produto) {
 		Pedido pedido = buscarPedidoPorId(idpedido);
-		
+
 		if (pedido != null) {
 			pedido.setdtEmissao(dtemissao);
 			pedido.setdtEntrega(dtentrega);
 			pedido.setvalorTotal(valortotal);
-			cliente.setidCliente(idpedido);
+			cliente.setIdCliente(idpedido);
 			produto.setIdProduto(idpedido);
-			
+
 		}
 	}
 
@@ -47,7 +48,7 @@ public class CadastroPedidos {
 		}
 	}
 
-	public void imprimirPedidoComProdutos(int idpedido , Cliente cliente) {
+	public void imprimirPedidoComProdutos(int idpedido, Cliente cliente) {
 		Pedido pedido = buscarPedidoPorId(idpedido);
 		if (pedido != null) {
 			System.out.println("Pedido #" + pedido.getidPedido());

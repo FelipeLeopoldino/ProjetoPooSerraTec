@@ -6,15 +6,9 @@ public class Produto {
 	private String descricao;
 	private double vlCusto;
 	private double vlVenda;
-	private String categoria;
+	private String categoria;	
+	
 
-	public Produto(int idProduto, String descricao, double vlCusto, double vlVenda, String categoria) {
-		this.idProduto = idProduto;
-		this.descricao = descricao;
-		this.vlCusto = vlCusto;
-		this.vlVenda = vlVenda;
-		this.categoria = categoria;
-	}
 
 	@Override
 	public String toString() {

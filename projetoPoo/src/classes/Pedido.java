@@ -4,45 +4,44 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Pedido extends PedidoItens {
-
+	
 	private int idPedido;
 	private Date dtEmissao;
 	private Date dtEntrega;
 	private double valorTotal;
 	private String observacao;
-	private Cliente cliente;
-	private ArrayList<PedidoItens> itens;
+	private Cliente cliente = new Cliente();
+	private ArrayList<PedidoItens> itens = new ArrayList<>();
 
-	public Pedido(int idProduto, String descricao, double vlCusto, double vlVenda, String categoria, int idPedidoItem,
-			double vlUnitario, int qtProduto, double vlDesconto, int idPedido, Date dtEmissao, Date dtEntrega,
-			double valorTotal, String observacao, Cliente cliente, ArrayList<PedidoItens> itens) {
-		super(idProduto, descricao, vlCusto, vlVenda, categoria, idPedidoItem, vlUnitario, qtProduto, vlDesconto);
-		this.idPedido = idPedido;
-		this.dtEmissao = dtEmissao;
-		this.dtEntrega = dtEntrega;
-		this.valorTotal = valorTotal;
-		this.observacao = observacao;
-		this.cliente = cliente;
-		this.itens = new ArrayList<>();
-	}
 
 	public boolean incluirCliente(Cliente cliente) {
 		boolean temCliente = true;
 
 		if (!temCliente) {
-			cliente.setidCliente(idPedido);
+			cliente.setIdCliente(idPedido);
 			System.out.println("Cliente inserido com sucesso!!");
 		} else {
-			cliente.getidCliente();
+			cliente.getIdCliente();
 		}
 
 		return temCliente;
 	}
 	
 	public void adicionarItem(PedidoItens item) {
-		itens.add(item);
+		PedidoItens pedidoItem = new PedidoItens();
+		
+		pedidoItem.setDescricao(item.getDescricao());
+		pedidoItem.setIdProduto(item.getIdProduto());
+		pedidoItem.setqtProduto(item.getqtProduto());
+		pedidoItem.setVlCusto(item.getVlCusto());
+		pedidoItem.setVlVenda(item.getVlVenda());
+		
+		
+		itens.add(pedidoItem);
+				
 	}
 
+	
 	public void removerItem(PedidoItens item) {
 		itens.remove(item);
 	}
@@ -53,6 +52,8 @@ public class Pedido extends PedidoItens {
 		item.setvlDesconto(desconto);
 	}
 
+	
+	
 	public PedidoItens[] getListaItens() {
 		return null;
 	}

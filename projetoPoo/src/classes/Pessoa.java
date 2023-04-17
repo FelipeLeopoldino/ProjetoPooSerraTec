@@ -1,24 +1,21 @@
 package classes;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public abstract class Pessoa {
 
-	protected int id;
+	protected int idPessoa;
 	protected String nome;
 	protected String cpf;
-	protected Date dtNascimento;
-	
-	
-	public Pessoa(int id, String nome, String cpf, Date dtNascimento) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.dtNascimento = dtNascimento;
+	protected Calendar dtNascimento;
+
+	public int getIdPessos() {
+		return idPessoa;
 	}
 
-	public abstract String toString();
+	public void setIdPessoa(int idPessoa) {
+		this.idPessoa = idPessoa;
+	}
 
 	public String getNome() {
 		return nome;
@@ -36,11 +33,11 @@ public abstract class Pessoa {
 		this.cpf = cpf;
 	}
 
-	public Date getDtNascimento() {
+	public Calendar getDtNascimento() {
 		return dtNascimento;
 	}
 
-	public void setDtNascimento(Date dtNascimento) {
+	public void setDtNascimento(Calendar dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
 

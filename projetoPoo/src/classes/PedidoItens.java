@@ -7,14 +7,6 @@ public class PedidoItens extends Produto {
 	private int qtProduto;
 	private double vlDesconto;
 
-	public PedidoItens(int idProduto, String descricao, double vlCusto, double vlVenda, String categoria,
-			int idPedidoItem, double vlUnitario, int qtProduto, double vlDesconto) {
-		super(idProduto, descricao, vlCusto, vlVenda, categoria);
-		this.idPedidoItem = idPedidoItem;
-		this.vlUnitario = vlUnitario;
-		this.qtProduto = qtProduto;
-		this.vlDesconto = vlDesconto;
-	}
 
 	public int getidPedidoItem() {
 		return idPedidoItem;
@@ -48,5 +40,4 @@ public class PedidoItens extends Produto {
 		this.vlDesconto = vlDesconto;
 	}
 
-	
 }

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public interface CRUD {
 
-	public void cadastroPedido();
+	public void CadastroPedido();
 
-	public void incluirPedidos();
+	public void incluirPedidos(Pedido pedido);
 
 	public void alterarPedidos();
 
@@ -21,5 +21,8 @@ public interface CRUD {
 	public ArrayList<Pedido> buscarPedidosPorData();
 
 	public Pedido buscarPedidoPorId();
+
+
+
 
 }
