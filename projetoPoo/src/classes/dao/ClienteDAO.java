@@ -6,14 +6,11 @@ import classes.Cliente;
 import conexao.Conexao;
 
 public class ClienteDAO {
-	// Crio o atributo de conex�o que receber� a conex�o do sistema
 	private Conexao conexao;
-	// Crio o atributo schema que receber� a conex�o do sistema
 	private String schema;
 
 	PreparedStatement pInclusao = null;
 
-	// Construtor da classe que recebe a conex�o e o schema
 	public ClienteDAO(Conexao conexao, String schema) {
 		this.conexao = conexao;
 		this.schema = schema;
@@ -29,8 +26,6 @@ public class ClienteDAO {
 		try {
 			pInclusao = conexao.getC().prepareStatement(sql);
 		} catch (Exception e) {
-			// System.err.println(e);
-			// e.printStackTrace();
 		}
 	}
 
@@ -60,9 +55,6 @@ public class ClienteDAO {
 		conexao.query(sql);
 	}
 
-	// M�todo que busca um cliente a partir do seu idcliente (c�digo)
-	// Retorna para quem chamou um objeto Cliente com todos os dados do cliente
-	// encontrado
 	public Cliente selecionarCliente(int idCliente) {
 		Cliente cliente = new Cliente();
 		ResultSet tabela;
@@ -72,8 +64,6 @@ public class ClienteDAO {
 		tabela = conexao.query(sql);
 
 		try {
-			// tabela.next vai para o pr�xima linha da tabela
-			// o result come�a antes da primeira linha
 			if (tabela.next()) {
 				cliente.setIdCliente(tabela.getInt("idcliente"));
 				cliente.setNome(tabela.getString("nome"));
@@ -111,8 +101,6 @@ public class ClienteDAO {
 		tabela = conexao.query(sql);
 
 		try {
-			// tabela.next vai para a pr�xima linha da tabela
-			// o ResultSet come�a antes da primeira linha
 			if (tabela.next()) {
 				cliente.setIdCliente(tabela.getInt("idcliente"));
 				cliente.setNome(tabela.getString("nome"));
@@ -144,16 +132,15 @@ public class ClienteDAO {
 		tabela = conexao.query(sql);
 
 		try {
-			tabela.last(); // segue para a �ltima linha da tabela
-			int rowCount = tabela.getRow(); // pega o n�mero da linha (que no caso � a �ltima)
+			tabela.last();
+			int rowCount = tabela.getRow();
 			System.out.println("Quantidade de clientes: " + rowCount);
 
 			if (rowCount > 0) {
 				System.out.println("\nCódigo\tNome\t\t\tCPF\t\tEndereço");
 			} else {
 				System.out.println("\nN�o possui dados.");
-				return; // Aqui chamo o return para sair do m�todo
-						// O return � void (vazio)
+				return;
 			}
 
 			tabela.beforeFirst();

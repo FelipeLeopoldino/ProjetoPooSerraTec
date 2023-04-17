@@ -40,4 +40,10 @@ public class PedidoItens extends Produto {
 		this.vlDesconto = vlDesconto;
 	}
 
+	public void setVlPreco(double double1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

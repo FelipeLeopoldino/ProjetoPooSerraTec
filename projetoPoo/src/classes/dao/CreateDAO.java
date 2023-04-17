@@ -101,7 +101,7 @@ public class CreateDAO {
 					tentativas++;
 				}
 			} catch (Exception e) {
-				System.err.printf("N�o foi poss�vel criar o schema %s: %s", schema, e);
+				System.err.printf("Não foi possível criar o schema %s: %s", schema, e);
 				e.printStackTrace();
 				return false;
 			}
@@ -160,7 +160,7 @@ public class CreateDAO {
 			criarCampo(con, schema, entidade, "descricao", "varchar(100)", false, false, null, null);
 			criarCampo(con, schema, entidade, "custo", "double precision", false, false, null, null);
 			criarCampo(con, schema, entidade, "venda", "double precision", false, false, null, null);
-			criarCampo(con, schema, entidade, "idcategoria", "integer", false, false, null, null);
+			criarCampo(con, schema, entidade, "categoria", "varchar(50)", false, false, null, null);
 
 		}
 	}
@@ -181,7 +181,7 @@ public class CreateDAO {
 	}
 
 	private static void criarEntidadePedidoItem(Conexao con, String schema) {
-		String entidade = "peditem";
+		String entidade = "pedidoItem";
 
 		if (!entidadeExists(con, schema, entidade))
 			criarTabela(con, entidade, schema);
