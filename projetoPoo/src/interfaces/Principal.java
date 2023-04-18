@@ -1,11 +1,10 @@
 package interfaces;
 
 import classes.Cliente;
-
-import classes.dao.ClienteDAO;
-import classes.dao.CreateDAO;
 import conexao.Conexao;
 import conexao.DadosConexao;
+import dao.ClienteDAO;
+import dao.CreateDAO;
 import files.ArquivoTxt;
 import java.util.Scanner;
 
@@ -17,6 +16,7 @@ public class Principal {
 	public static final String SFILE = "DadosConexao.ini";
 
 	public static void main(String[] args) {
+		
 		ArquivoTxt conexaoIni = new ArquivoTxt(PATH + SFILE);
 		DadosConexao dadoCon = new DadosConexao();
 		boolean abrirSistema = false;
@@ -27,12 +27,12 @@ public class Principal {
 				abrirSistema = true;
 			} else {
 				conexaoIni.apagarArquivo();
-				System.out.println("Arquivo de configura��o de conex�o:\n");
+				System.out.println("Arquivo de configuração de conexão:\n");
 				System.out.println("Local: ");
 				String local = input.nextLine();
 				System.out.println("Porta: ");
 				String porta = input.nextLine();
-				System.out.println("Usu�rio: ");
+				System.out.println("Usuário: ");
 				String usuario = input.nextLine();
 				System.out.println("Senha: ");
 				String senha = input.nextLine();
@@ -51,11 +51,11 @@ public class Principal {
 						dadoCon = conexaoIni.getData();
 						abrirSistema = true;
 					} else
-						System.out.println("N�o foi poss�vel efetuar a configura��o.\nVerifique");
+						System.out.println("Não foi possível efetuar a configuração.\nVerifique");
 				}
 			}
 		} else
-			System.out.println("Houve um problema na cria��o do arquivo de configura��o.");
+			System.out.println("Houve um problema na criação do arquivo de configuração.");
 
 		if (abrirSistema) {
 			if (CreateDAO.createBD(BD, SCHEMA, dadoCon)) {
@@ -63,7 +63,7 @@ public class Principal {
 				con.conect();
 				menuPrincipal(con);
 			} else {
-				System.err.println("Houve um problema na cria��o do banco de dados.");
+				System.err.println("Houve um problema na criação do banco de dados.");
 			}
 		}
 
@@ -124,7 +124,7 @@ public class Principal {
 
 		do {
 			menuCRUD();
-			opcao = informeOpcao("Informe uma op��o: ");
+			opcao = informeOpcao("Informe uma opção: ");
 
 			switch (opcao) {
 			case 1:
@@ -145,7 +145,7 @@ public class Principal {
 			case 6:
 				break;
 			default:
-				System.out.println("Op��o inv�lida.");
+				System.out.println("Opção inválida.");
 			}
 		} while (opcao != 6);
 	}
@@ -153,7 +153,7 @@ public class Principal {
 	public static void excluirCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
 
-		int codigo = informeOpcao("\nInforme o c�digo: ");
+		int codigo = informeOpcao("\nInforme o código: ");
 		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
 
 		if (cliente != null) {
@@ -164,20 +164,20 @@ public class Principal {
 	public static void localizarCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
 
-		int codigo = informeOpcao("\nInforme o c�digo: ");
+		int codigo = informeOpcao("\nInforme o código: ");
 		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
 
 		if (cliente != null) {
-			System.out.println("Localiza��o do cliente");
+			System.out.println("Localização do cliente");
 			System.out.printf("Nome: %s", cliente.getNome());
-			System.out.printf("Endere�o: %s", cliente.getEndereco());
+			System.out.printf("Endereço: %s", cliente.getEndereco());
 		}
 	}
 
 	public static void alterarCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
 
-		int codigo = informeOpcao("\nInforme o c�digo: ");
+		int codigo = informeOpcao("\nInforme o código: ");
 		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
 
 		if (cliente != null) {
@@ -229,7 +229,7 @@ public class Principal {
 			opcao = informeOpcao("Escolha como localizar");
 
 			System.out.println("1- Nome");
-			System.out.println("2- C�digo");
+			System.out.println("2- Código");
 			System.out.println("3- Voltar");
 
 			switch (opcao) {
@@ -238,21 +238,21 @@ public class Principal {
 				String nome = input.nextLine();
 				cliente = clienteDao.localizarCliente(nome, 0);
 				if (cliente == null) {
-					System.out.println("Cliente n�o encontrado");
+					System.out.println("Cliente não encontrado");
 				} else
 					opcao = 3;
 				break;
 			case 2:
-				System.out.println("Informe o c�digo: ");
+				System.out.println("Informe o código: ");
 				int codigo = informeOpcao("");
 				cliente = clienteDao.localizarCliente(null, codigo);
 				if (cliente == null) {
-					System.out.println("Cliente n�o encontrado");
+					System.out.println("Cliente não encontrado");
 				} else
 					opcao = 3;
 				break;
 			default:
-				System.out.println("C�digo inv�lido");
+				System.out.println("Código inválido");
 			}
 		} while (opcao != 3);
 

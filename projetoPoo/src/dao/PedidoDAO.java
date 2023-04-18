@@ -1,4 +1,4 @@
-package classes.dao;
+package dao;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,13 +14,13 @@ public class PedidoDAO {
 	private String schema;
 
 	PreparedStatement pInclusaoPedido = null;
-	PreparedStatement pInclusaoPedItem = null;
+	PreparedStatement pInclusaoPedidoItem = null;
 
 	public PedidoDAO(Conexao conexao, String schema) {
 		this.conexao = conexao;
 		this.schema = schema;
 		prepararSqlInclusaoPedido();
-		prepararSqlInclusaoPedItem();
+		prepararSqlInclusaoPedidoItem();
 	}
 
 	private void prepararSqlInclusaoPedido() {
@@ -35,14 +35,14 @@ public class PedidoDAO {
 		}
 	}
 
-	private void prepararSqlInclusaoPedItem() {
+	private void prepararSqlInclusaoPedidoItem() {
 		String sql = "insert into " + this.schema + ".peditem";
 		sql = sql + " (idpedido, idproduto, vlCusto, qtProduto)";
 		sql = sql + " values ";
 		sql = sql + " (?, ?, ?, ?)";
 
 		try {
-			pInclusaoPedItem = conexao.getC().prepareStatement(sql);
+			pInclusaoPedidoItem = conexao.getC().prepareStatement(sql);
 		} catch (Exception e) {
 			
 		}
@@ -70,12 +70,12 @@ public class PedidoDAO {
 
 	public int incluirPedItem(Pedido pedido, PedidoItens itens) {
 		try {
-			pInclusaoPedItem.setInt(1, pedido.getidPedido());
-			pInclusaoPedItem.setInt(2, itens.getIdProduto());
-			pInclusaoPedItem.setDouble(3, itens.getvlUnitario());
-			pInclusaoPedItem.setDouble(4, itens.getqtProduto());
+			pInclusaoPedidoItem.setInt(1, pedido.getidPedido());
+			pInclusaoPedidoItem.setInt(2, itens.getIdProduto());
+			pInclusaoPedidoItem.setDouble(3, itens.getvlUnitario());
+			pInclusaoPedidoItem.setDouble(4, itens.getqtProduto());
 
-			return pInclusaoPedItem.executeUpdate();
+			return pInclusaoPedidoItem.executeUpdate();
 		} catch (Exception e) {
 			if (e.getLocalizedMessage().contains("is null")) {
 				System.err.println("\nPedidoItem não incluído.\nVerifique se foi chamado o conect:\n" + e);
@@ -142,7 +142,7 @@ public class PedidoDAO {
 					itens.setqtProduto(tbItens.getInt("quantidade"));
 					itens.setvlUnitario(tbItens.getDouble("valorunitario"));
 					itens.setVlCusto(tbItens.getDouble("custo"));
-					itens.setVlPreco(tbItens.getDouble("preco"));
+					itens.setVlVenda(tbItens.getDouble("preco"));
 
 					pedido.adicionarItem(itens);
 				}

@@ -7,7 +7,6 @@ public class PedidoItens extends Produto {
 	private int qtProduto;
 	private double vlDesconto;
 
-
 	public int getidPedidoItem() {
 		return idPedidoItem;
 	}
@@ -39,11 +38,5 @@ public class PedidoItens extends Produto {
 	public void setvlDesconto(double vlDesconto) {
 		this.vlDesconto = vlDesconto;
 	}
-
-	public void setVlPreco(double double1) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }
