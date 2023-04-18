@@ -35,7 +35,7 @@ public class ClienteDAO {
 			pInclusao.setString(1, cliente.getNome());
 			pInclusao.setString(2, cliente.getCpf());
 			pInclusao.setString(3, cliente.getEndereco());
-			pInclusao.setDate(3, (Date) cliente.getDtNascimento());
+			pInclusao.setDate(4, (Date) cliente.getDtNascimento());
 
 			return pInclusao.executeUpdate();
 		} catch (Exception e) {
