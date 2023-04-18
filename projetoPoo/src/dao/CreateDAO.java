@@ -161,7 +161,6 @@ public class CreateDAO {
 			criarCampo(con, schema, entidade, "custo", "double precision", false, false, null, null);
 			criarCampo(con, schema, entidade, "venda", "double precision", false, false, null, null);
 			criarCampo(con, schema, entidade, "categoria", "varchar(50)", false, false, null, null);
-
 		}
 	}
 

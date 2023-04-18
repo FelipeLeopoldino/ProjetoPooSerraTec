@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import classes.Cliente;
@@ -19,9 +20,9 @@ public class ClienteDAO {
 
 	private void prepararSqlInclusao() {
 		String sql = "insert into " + this.schema + ".cliente";
-		sql += " (nome, cpf, endereco, dtNascimento)";
+		sql += " (idCliente, nome, cpf, endereco, dtNascimento)";
 		sql += " values ";
-		sql += " (?, ?, ?, ?)";
+		sql += " (?,?, ?, ?, ?)";
 
 		try {
 			pInclusao = conexao.getC().prepareStatement(sql);
@@ -34,6 +35,7 @@ public class ClienteDAO {
 			pInclusao.setString(1, cliente.getNome());
 			pInclusao.setString(2, cliente.getCpf());
 			pInclusao.setString(3, cliente.getEndereco());
+			pInclusao.setDate(3, (Date) cliente.getDtNascimento());
 
 			return pInclusao.executeUpdate();
 		} catch (Exception e) {
@@ -50,7 +52,7 @@ public class ClienteDAO {
 
 	public void alterarCliente(Cliente cliente) {
 		String sql = "update " + this.schema + ".cliente set " + "nome = '" + cliente.getNome() + "'" + ", cpf = '"
-				+ cliente.getCpf() + "'" + ", endereco = '" + cliente.getEndereco() + "'" + "' " + "where idcliente = "
+				+ cliente.getCpf() + "'" + ", dtNascimento = '" + cliente.getDtNascimento() + "'" +  ", endereco = '" + cliente.getEndereco() + "'"+"' " + "where idcliente = "
 				+ cliente.getIdCliente();
 		conexao.query(sql);
 	}
@@ -106,6 +108,7 @@ public class ClienteDAO {
 				cliente.setNome(tabela.getString("nome"));
 				cliente.setCpf(tabela.getString("cpf"));
 				cliente.setEndereco(tabela.getString("endereco"));
+				cliente.setDtNascimento(tabela.getDate("dtNascimento"));
 			} else {
 				if (nome == null) {
 					System.out.println("IdCliente " + idCliente + " não localizado.");
@@ -137,9 +140,9 @@ public class ClienteDAO {
 			System.out.println("Quantidade de clientes: " + rowCount);
 
 			if (rowCount > 0) {
-				System.out.println("\nCódigo\tNome\t\t\tCPF\t\tEndereço");
+				System.out.println("\nCódigo\tNome\t\tCPF\tdtNascimento\tEndereço");
 			} else {
-				System.out.println("\nN�o possui dados.");
+				System.out.println("\nNão possui dados.");
 				return;
 			}
 

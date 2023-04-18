@@ -20,31 +20,17 @@ public class PedidoDAO {
 		this.conexao = conexao;
 		this.schema = schema;
 		prepararSqlInclusaoPedido();
-		prepararSqlInclusaoPedidoItem();
 	}
 
 	private void prepararSqlInclusaoPedido() {
 		String sql = "insert into " + this.schema + ".pedido";
-		sql = sql + " (idPedido, data, valorTotal, idcliente)";
+		sql = sql + " (idPedido, data, valorTotal, idCliente)";
 		sql = sql + " values ";
 		sql = sql + " (?, ?, ?, ?)";
 
 		try {
 			pInclusaoPedido = conexao.getC().prepareStatement(sql);
 		} catch (Exception e) {
-		}
-	}
-
-	private void prepararSqlInclusaoPedidoItem() {
-		String sql = "insert into " + this.schema + ".peditem";
-		sql = sql + " (idpedido, idproduto, vlCusto, qtProduto)";
-		sql = sql + " values ";
-		sql = sql + " (?, ?, ?, ?)";
-
-		try {
-			pInclusaoPedidoItem = conexao.getC().prepareStatement(sql);
-		} catch (Exception e) {
-			
 		}
 	}
 
@@ -68,29 +54,10 @@ public class PedidoDAO {
 		}
 	}
 
-	public int incluirPedItem(Pedido pedido, PedidoItens itens) {
-		try {
-			pInclusaoPedidoItem.setInt(1, pedido.getidPedido());
-			pInclusaoPedidoItem.setInt(2, itens.getIdProduto());
-			pInclusaoPedidoItem.setDouble(3, itens.getvlUnitario());
-			pInclusaoPedidoItem.setDouble(4, itens.getqtProduto());
-
-			return pInclusaoPedidoItem.executeUpdate();
-		} catch (Exception e) {
-			if (e.getLocalizedMessage().contains("is null")) {
-				System.err.println("\nPedidoItem não incluído.\nVerifique se foi chamado o conect:\n" + e);
-			} else {
-				System.err.println(e);
-				e.printStackTrace();
-			}
-			return 0;
-		}
-	}
-
 	public void alterarPedido(Pedido pedido) {
 		String sql = "update " + this.schema + ".pedido set " + "numero = '" + pedido.getidPedido() + "'"
-				+ ", idcliente = '" + pedido.getCliente().getIdCliente() + "'" + ", valorpedido = '"
-				+ pedido.getvalorTotal() + "'" + "where idpedido = " + pedido.getidPedido();
+				+ ", idCliente = '" + pedido.getCliente().getIdCliente() + "'" + ", valorTotal = '"
+				+ pedido.getvalorTotal() + "'" + "where idPedido = " + pedido.getidPedido();
 		conexao.query(sql);
 	}
 
@@ -104,7 +71,7 @@ public class PedidoDAO {
 		String sql;
 
 		if (numero == null) {
-			sql = "select * from " + this.schema + ".pedido where idpedido = " + idpedido;
+			sql = "select * from " + this.schema + ".pedido where idPedido = " + idpedido;
 		} else
 			sql = "select * from " + this.schema + ".pedido where numero = '" + numero + "'";
 
@@ -123,16 +90,16 @@ public class PedidoDAO {
 					cliente.setNome(tbCliente.getString("nome"));
 				}
 
-				sql = "select p.*, pi.valorunitario, pi.quantidade from " + this.schema + ".produto p " + "right join "
-						+ this.schema + ".peditem pi on pi.idproduto = p.idproduto " + "where pi.idpedido = "
+				sql = "select p.*, pi.vlUnitario, pi.qtProduto from " + this.schema + ".produto p " + "right join "
+						+ this.schema + ".pedidoItem pi on pi.idProduto = p.idProduto " + "where pi.idPedido = "
 						+ tbPedido.getInt("idpedido");
 
 				tbItens = conexao.query(sql);
 
-				pedido.setidPedido(tbPedido.getInt("idpedido"));
+				pedido.setidPedido(tbPedido.getInt("idPedido"));
 				pedido.setCliente(cliente);
 				pedido.setdtEmissao(tbPedido.getDate("data"));
-				pedido.setvalorTotal(tbPedido.getDouble("valorpedido"));
+				pedido.setvalorTotal(tbPedido.getDouble("valorTotal"));
 
 				tbItens.beforeFirst();
 
@@ -150,7 +117,7 @@ public class PedidoDAO {
 				tbItens.close();
 				tbCliente.close();
 			} else
-				System.out.println("IdPedido " + idpedido + " n�o localizado.");
+				System.out.println("IdPedido " + idpedido + " não localizado.");
 
 			tbPedido.close();
 
@@ -164,11 +131,11 @@ public class PedidoDAO {
 
 	public void apagarPedido(int idpedido) {
 
-		String sql = "delete from " + this.schema + ".peditem" + " where idpedido = " + idpedido;
+		String sql = "delete from " + this.schema + ".pedidoItem" + " where idPedido = " + idpedido;
 
 		conexao.query(sql);
 
-		sql = "delete from " + this.schema + ".pedido" + " where idpedido = " + idpedido;
+		sql = "delete from " + this.schema + ".pedido" + " where idPedido = " + idpedido;
 
 		conexao.query(sql);
 	}
@@ -176,8 +143,8 @@ public class PedidoDAO {
 	public void listarPedidos() {
 		ResultSet tabela;
 
-		String sql = "select p.*, c.cpf, c.endereco, c.nome, c.rg, c.sexo " + "from " + this.schema + ".pedido p "
-				+ "left join " + this.schema + ".cliente c on c.idcliente = p.idcliente " + "order by idpedido";
+		String sql = "select p.*, c.cpf, c.endereco, c.nome " + "from " + this.schema + ".pedido p " + "left join "
+				+ this.schema + ".cliente c on c.idCliente = p.idCliente " + "order by idPedido";
 
 		tabela = conexao.query(sql);
 
@@ -200,7 +167,7 @@ public class PedidoDAO {
 			while (tabela.next()) {
 				System.out.printf("%s\t%s\t%-20s\t%s\t\t%s\t%2.2f\n", tabela.getString("numero"),
 						tabela.getString("data"), tabela.getString("nome"), tabela.getString("cpf"),
-						tabela.getString("valorpedido"));
+						tabela.getString("valorTotal"));
 			}
 
 		} catch (Exception e) {

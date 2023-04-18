@@ -1,13 +1,13 @@
 package classes;
 
-import java.util.Calendar;
+import java.util.Date;
 
 abstract class Pessoa {
 
 	protected int idPessoa;
 	protected String nome;
 	protected String cpf;
-	protected Calendar dtNascimento;
+	protected Date dtNascimento;
 
 	public int getIdPessos() {
 		return idPessoa;
@@ -33,11 +33,11 @@ abstract class Pessoa {
 		this.cpf = cpf;
 	}
 
-	public Calendar getDtNascimento() {
+	public Date getDtNascimento() {
 		return dtNascimento;
 	}
 
-	public void setDtNascimento(Calendar dtNascimento) {
+	public void setDtNascimento(Date dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
 

@@ -1,12 +1,15 @@
 package interfaces;
 
+import java.util.Scanner;
+
+
+
 import classes.Cliente;
 import conexao.Conexao;
 import conexao.DadosConexao;
 import dao.ClienteDAO;
 import dao.CreateDAO;
 import files.ArquivoTxt;
-import java.util.Scanner;
 
 public class Principal {
 	public static Scanner input = new Scanner(System.in);
@@ -17,7 +20,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		
-		ArquivoTxt conexaoIni = new ArquivoTxt(PATH + SFILE);
+		ArquivoTxt conexaoIni = new ArquivoTxt(SFILE);
 		DadosConexao dadoCon = new DadosConexao();
 		boolean abrirSistema = false;
 

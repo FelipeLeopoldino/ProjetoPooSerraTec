@@ -58,7 +58,7 @@ public class ArquivoTxt {
 
 				Linhas.close();
 			} else
-				System.out.println("Arquivo n�o existe.");
+				System.out.println("Arquivo não existe.");
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Ocorreu um erro na leitura.");

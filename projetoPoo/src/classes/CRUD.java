@@ -22,7 +22,5 @@ public interface CRUD {
 
 	public Pedido buscarPedidoPorId();
 
-
-
-
+	
 }
