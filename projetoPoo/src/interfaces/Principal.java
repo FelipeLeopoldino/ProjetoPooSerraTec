@@ -2,8 +2,6 @@ package interfaces;
 
 import java.util.Scanner;
 
-
-
 import classes.Cliente;
 import conexao.Conexao;
 import conexao.DadosConexao;
@@ -19,7 +17,7 @@ public class Principal {
 	public static final String SFILE = "DadosConexao.ini";
 
 	public static void main(String[] args) {
-		
+
 		ArquivoTxt conexaoIni = new ArquivoTxt(SFILE);
 		DadosConexao dadoCon = new DadosConexao();
 		boolean abrirSistema = false;
@@ -79,7 +77,9 @@ public class Principal {
 			System.out.println("\nMENU PRINCIPAL");
 			System.out.println("---------------------");
 			System.out.println("0- Sair");
-			System.out.println("1- Cliente");
+			System.out.println("1- Clientes");
+			System.out.println("2- Produtos");
+			System.out.println("3- Pedido");
 
 			opcao = informeOpcao("Informe uma opção: ");
 
@@ -89,6 +89,12 @@ public class Principal {
 				break;
 			case 1:
 				menuCliente(con);
+				break;
+			case 2:
+				menuProdutos(con);
+				break;
+			case 3:
+				menuPedido(con);
 				break;
 
 			default:
@@ -114,12 +120,9 @@ public class Principal {
 	}
 
 	public static void menuCRUD() {
-		System.out.println("1- Incluir");
-		System.out.println("2- Alterar");
-		System.out.println("3- Excluir");
-		System.out.println("4- Localizar");
-		System.out.println("5- Listar");
-		System.out.println("6- Voltar");
+		System.out.println("1- Localizar");
+		System.out.println("2- Listar");
+		System.out.println("3- Voltar");
 	}
 
 	public static void menuCliente(Conexao con) {
@@ -128,24 +131,14 @@ public class Principal {
 		do {
 			menuCRUD();
 			opcao = informeOpcao("Informe uma opção: ");
-
 			switch (opcao) {
 			case 1:
-				incluirCliente(con);
-				break;
-			case 2:
-				alterarCliente(con);
-				break;
-			case 3:
-				excluirCliente(con);
-				break;
-			case 4:
 				localizarCliente(con);
 				break;
-			case 5:
+			case 2:
 				listarCliente(con);
 				break;
-			case 6:
+			case 3:
 				break;
 			default:
 				System.out.println("Opção inválida.");
@@ -153,16 +146,23 @@ public class Principal {
 		} while (opcao != 6);
 	}
 
-	public static void excluirCliente(Conexao con) {
-		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
-
-		int codigo = informeOpcao("\nInforme o código: ");
-		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
-
-		if (cliente != null) {
-			clienteDAO.apagarCliente(cliente.getIdCliente());
-		}
+	public static void menuProdutos(Conexao con) {
+		
 	}
+
+	public static void menuPedido(Conexao con) {
+
+	}
+//	public static void excluirCliente(Conexao con) {
+//		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
+//
+//		int codigo = informeOpcao("\nInforme o código: ");
+//		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
+//
+//		if (cliente != null) {
+//			clienteDAO.apagarCliente(cliente.getIdCliente());
+//		}
+//	}
 
 	public static void localizarCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
@@ -177,47 +177,47 @@ public class Principal {
 		}
 	}
 
-	public static void alterarCliente(Conexao con) {
-		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
-
-		int codigo = informeOpcao("\nInforme o código: ");
-		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
-
-		if (cliente != null) {
-			clienteDAO.alterarCliente(cliente);
-		}
-	}
+//	public static void alterarCliente(Conexao con) {
+//		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
+//
+//		int codigo = informeOpcao("\nInforme o código: ");
+//		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
+//
+//		if (cliente != null) {
+//			clienteDAO.alterarCliente(cliente);
+//		}
+//	}
 
 	public static void listarCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
 		clienteDAO.listarClientes();
 	}
 
-	public static void incluirCliente(Conexao con) {
-		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
-		Cliente cliente = solicitarDadosCliente();
-		clienteDAO.incluirCliente(cliente);
-	}
+//	public static void incluirCliente(Conexao con) {
+//		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
+//		Cliente cliente = solicitarDadosCliente();
+//		clienteDAO.incluirCliente(cliente);
+//	}
 
-	public static Cliente solicitarDadosCliente() {
-		Cliente cliente = new Cliente();
-
-		System.out.println("\nDados do cliente");
-		System.out.println("Informe o nome: ");
-		String nome = input.nextLine();
-
-		System.out.println("Informe o CPF: ");
-		String cpf = input.nextLine();
-
-		System.out.println("Informe o endereço: ");
-		String endereco = input.nextLine();
-
-		cliente.setNome(nome);
-		cliente.setCpf(cpf);
-		cliente.setEndereco(endereco);
-
-		return cliente;
-	}
+//	public static Cliente solicitarDadosCliente() {
+//		Cliente cliente = new Cliente();
+//
+//		System.out.println("\nDados do cliente");
+//		System.out.println("Informe o nome: ");
+//		String nome = input.nextLine();
+//
+//		System.out.println("Informe o CPF: ");
+//		String cpf = input.nextLine();
+//
+//		System.out.println("Informe o endereço: ");
+//		String endereco = input.nextLine();
+//
+//		cliente.setNome(nome);
+//		cliente.setCpf(cpf);
+//		cliente.setEndereco(endereco);
+//
+//		return cliente;
+//	}
 
 	public static boolean isNumeric(String str) {
 		return str != null && str.matches("[0-9.]+");

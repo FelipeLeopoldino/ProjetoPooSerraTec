@@ -1,13 +1,12 @@
 package classes;
 
-import java.util.Date;
 
 abstract class Pessoa {
 
 	protected int idPessoa;
 	protected String nome;
 	protected String cpf;
-	protected Date dtNascimento;
+	protected String dtNascimento;
 
 	public int getIdPessos() {
 		return idPessoa;
@@ -33,11 +32,11 @@ abstract class Pessoa {
 		this.cpf = cpf;
 	}
 
-	public Date getDtNascimento() {
+	public String getDtNascimento() {
 		return dtNascimento;
 	}
 
-	public void setDtNascimento(Date dtNascimento) {
+	public void setDtNascimento(String dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
 

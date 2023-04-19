@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import classes.Cliente;
@@ -20,9 +19,9 @@ public class ClienteDAO {
 
 	private void prepararSqlInclusao() {
 		String sql = "insert into " + this.schema + ".cliente";
-		sql += " (idCliente, nome, cpf, endereco, dtNascimento)";
+		sql += " (idcliente, nome, cpf, endereco, dtnascimento, telefone)";
 		sql += " values ";
-		sql += " (?,?, ?, ?, ?)";
+		sql += " (?,?,?,?,?,?)";
 
 		try {
 			pInclusao = conexao.getC().prepareStatement(sql);
@@ -35,7 +34,8 @@ public class ClienteDAO {
 			pInclusao.setString(1, cliente.getNome());
 			pInclusao.setString(2, cliente.getCpf());
 			pInclusao.setString(3, cliente.getEndereco());
-			pInclusao.setDate(4, (Date) cliente.getDtNascimento());
+			pInclusao.setString(4, cliente.getDtNascimento());
+			pInclusao.setString(5, cliente.getTelefone());
 
 			return pInclusao.executeUpdate();
 		} catch (Exception e) {
@@ -52,8 +52,8 @@ public class ClienteDAO {
 
 	public void alterarCliente(Cliente cliente) {
 		String sql = "update " + this.schema + ".cliente set " + "nome = '" + cliente.getNome() + "'" + ", cpf = '"
-				+ cliente.getCpf() + "'" + ", dtNascimento = '" + cliente.getDtNascimento() + "'" +  ", endereco = '" + cliente.getEndereco() + "'"+"' " + "where idcliente = "
-				+ cliente.getIdCliente();
+				+ cliente.getCpf() + "'" + ", dtNascimento = '" + cliente.getDtNascimento() + "'" + ", endereco = '"
+				+ cliente.getEndereco() + "'" + "' " + "where idcliente = " + cliente.getIdCliente();
 		conexao.query(sql);
 	}
 
@@ -108,7 +108,7 @@ public class ClienteDAO {
 				cliente.setNome(tabela.getString("nome"));
 				cliente.setCpf(tabela.getString("cpf"));
 				cliente.setEndereco(tabela.getString("endereco"));
-				cliente.setDtNascimento(tabela.getDate("dtNascimento"));
+				cliente.setDtNascimento(tabela.getString("dtNascimento"));
 			} else {
 				if (nome == null) {
 					System.out.println("IdCliente " + idCliente + " não localizado.");

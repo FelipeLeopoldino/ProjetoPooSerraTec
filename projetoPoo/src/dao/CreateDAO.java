@@ -145,7 +145,9 @@ public class CreateDAO {
 			criarCampo(con, schema, entidade, "nome", "varchar(100)", false, false, null, null);
 			criarCampo(con, schema, entidade, "cpf", "varchar(11)", false, false, null, null);
 			criarCampo(con, schema, entidade, "endereco", "varchar(150)", false, false, null, null);
-			criarCampo(con, schema, entidade, "telefone", "varchar(20)", false, false, null, null);// adicionar dtNascimento
+			criarCampo(con, schema, entidade, "dtnascimento", "varchar(20)", false, false, null, null);
+			criarCampo(con, schema, entidade, "telefone", "varchar(20)", false, false, null, null);
+																									
 		}
 	}
 
@@ -158,8 +160,8 @@ public class CreateDAO {
 		if (entidadeExists(con, schema, entidade)) {
 			criarCampo(con, schema, entidade, "idproduto", "serial", true, false, null, null);
 			criarCampo(con, schema, entidade, "descricao", "varchar(100)", false, false, null, null);
-			criarCampo(con, schema, entidade, "custo", "double precision", false, false, null, null);
-			criarCampo(con, schema, entidade, "venda", "double precision", false, false, null, null);
+			criarCampo(con, schema, entidade, "vlcusto", "double precision", false, false, null, null);
+			criarCampo(con, schema, entidade, "vlvenda", "double precision", false, false, null, null);
 			criarCampo(con, schema, entidade, "categoria", "varchar(50)", false, false, null, null);
 		}
 	}
@@ -172,7 +174,7 @@ public class CreateDAO {
 
 		if (entidadeExists(con, schema, entidade)) {
 			criarCampo(con, schema, entidade, "idpedido", "serial", true, false, null, null);
-			criarCampo(con, schema, entidade, "valorTotal", "double precision", false, false, null, null);
+			criarCampo(con, schema, entidade, "valortotal", "double precision", false, false, null, null);
 			criarCampo(con, schema, entidade, "data", "timestamp", false, false, null, null);
 			criarCampo(con, schema, entidade, "observacao", "varchar(150)", false, false, null, null);
 			criarCampo(con, schema, entidade, "idcliente", "integer", false, true, schema + ".cliente", "idcliente");
@@ -180,18 +182,18 @@ public class CreateDAO {
 	}
 
 	private static void criarEntidadePedidoItem(Conexao con, String schema) {
-		String entidade = "pedidoItem";
+		String entidade = "pedidoitens";
 
 		if (!entidadeExists(con, schema, entidade))
 			criarTabela(con, entidade, schema);
 
 		if (entidadeExists(con, schema, entidade)) {
-			criarCampo(con, schema, entidade, "idpedidoItem", "serial", true, false, null, null);
+			criarCampo(con, schema, entidade, "idpedidoitem", "serial", true, false, null, null);
 			criarCampo(con, schema, entidade, "idpedido", "integer", false, true, schema + ".pedido", "idpedido");
 			criarCampo(con, schema, entidade, "idproduto", "integer", false, true, schema + ".produto", "idproduto");
-			criarCampo(con, schema, entidade, "vlUnitario", "double precision", false, false, null, null);
-			criarCampo(con, schema, entidade, "vlDesconto", "double precision", false, false, null, null);
-			criarCampo(con, schema, entidade, "qtProduto", "double precision", false, false, null, null);
+			criarCampo(con, schema, entidade, "vlunitario", "double precision", false, false, null, null);
+			criarCampo(con, schema, entidade, "vldesconto", "double precision", false, false, null, null);
+			criarCampo(con, schema, entidade, "qtproduto", "double precision", false, false, null, null);
 		}
 	}
 
