@@ -3,7 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
 import classes.Produto;
 import conexao.Conexao;
 
@@ -41,7 +40,7 @@ public class ProdutoDAO {
 	public void listaProdutos() {
 		ResultSet tabela;
 
-		String sql = "select * from " + this.schema + ".produto order by idProduto";
+		String sql = "select * from " + this.schema + ".produto order by idproduto";
 
 		tabela = conexao.query(sql);
 
@@ -51,7 +50,7 @@ public class ProdutoDAO {
 			System.out.println("Quantidade de produtos: " + rowCount);
 
 			if (rowCount > 0) {
-				System.out.println("\nCódigo\tDescrição\tvlCusto\tvlCusto");
+				System.out.println("\ncodigo\t\tDescricao\t\tvlcusto\tvlvenda\tcategoria");
 			} else {
 				System.out.println("\nNão possui dados.");
 				return;
@@ -59,10 +58,12 @@ public class ProdutoDAO {
 
 			tabela.beforeFirst();
 
+			System.out.println();
 			while (tabela.next()) {
-				System.out.printf("%s\ts\t%d\t%d\n", tabela.getInt("idProduto"), tabela.getString("descricao"),
-						tabela.getDouble("vlCusto"), tabela.getDouble("vlCusto"));
+				System.out.printf("%d\t%.20s\t\t%.2f\t%.2f\t%s\n", tabela.getInt("idproduto"), tabela.getString("descricao"),
+						tabela.getDouble("vlcusto"), tabela.getDouble("vlvenda"), tabela.getString("categoria"));
 			}
+			System.out.println();
 
 		} catch (Exception e) {
 			System.err.println(e);
@@ -71,8 +72,56 @@ public class ProdutoDAO {
 	}
 	
 	public void deletarProduto(int idProduto) {
-		String sql = "delete from " + this.schema + ".produto" + " where idProduto = " + idProduto;
+		String sql = "delete from " + this.schema + ".produto" + " where idproduto = " + idProduto;
 		conexao.query(sql);
 	}
+	
+	
+	
+	public Produto localizarProduto(String descricao, int idProduto) {
+		Produto produto = new Produto();
+		
+		String sql = "select * from " + this.schema + ".produto";
+		ResultSet tabela;
+		tabela = conexao.query(sql);
+
+		if (descricao == null) {
+			sql = "select * from " + this.schema + ".produto where idproduto = '" + idProduto + "'";
+
+		} else
+			sql = "select * from " + this.schema + ".produto where descricao = '" + descricao + "'";
+
+		tabela = conexao.query(sql);
+
+		try {
+			if (tabela.next()) {
+				produto.setIdProduto(tabela.getInt("idproduto"));
+				produto.setDescricao(tabela.getString("descricao"));
+				produto.setVlCusto(tabela.getDouble("vlcusto"));
+				produto.setVlVenda(tabela.getDouble("vlvenda"));
+				produto.setCategoria(tabela.getString("categoria"));
+				
+				System.out.printf("Descrição: %s vlCusto: %.2f vlVenda: %.2f Categoria: %s\n", produto.getDescricao(),produto.getVlCusto()
+						,produto.getVlVenda(),produto.getCategoria());
+				
+			} else {
+				if (descricao == null) {
+					System.out.println("idProduto " + idProduto + " não localizado.");
+				} else
+					System.out.println("Produto '" + descricao + "' não localizado.");
+
+				produto = null;
+			}
+
+			tabela.close();
+		} catch (Exception e) {
+			System.err.println(e);
+			e.printStackTrace();
+		}
+
+		return produto;
+	}
+
+	
 
 }

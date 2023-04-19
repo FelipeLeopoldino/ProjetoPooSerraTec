@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import classes.Cliente;
 import conexao.Conexao;
 
@@ -50,12 +51,12 @@ public class ClienteDAO {
 
 	}
 
-	public void alterarCliente(Cliente cliente) {
-		String sql = "update " + this.schema + ".cliente set " + "nome = '" + cliente.getNome() + "'" + ", cpf = '"
-				+ cliente.getCpf() + "'" + ", dtNascimento = '" + cliente.getDtNascimento() + "'" + ", endereco = '"
-				+ cliente.getEndereco() + "'" + "' " + "where idcliente = " + cliente.getIdCliente();
-		conexao.query(sql);
-	}
+//	public void alterarCliente(Cliente cliente) {
+//		String sql = "update " + this.schema + ".cliente set " + "nome = '" + cliente.getNome() + "'" + ", cpf = '"
+//				+ cliente.getCpf() + "'" + ", dtNascimento = '" + cliente.getDtNascimento() + "'" + ", endereco = '"
+//				+ cliente.getEndereco() + "'" + "' " + "where idcliente = " + cliente.getIdCliente();
+//		conexao.query(sql);
+//	}
 
 	public Cliente selecionarCliente(int idCliente) {
 		Cliente cliente = new Cliente();
@@ -83,20 +84,22 @@ public class ClienteDAO {
 		return cliente;
 	}
 
-	public void apagarCliente(int idCliente) {
-		String sql = "delete from " + this.schema + ".cliente" + " where idcliente = " + idCliente;
-
-		conexao.query(sql);
-	}
+//	public void apagarCliente(int idCliente) {
+//		String sql = "delete from " + this.schema + ".cliente" + " where idcliente = " + idCliente;
+//
+//		conexao.query(sql);
+//	}
 
 	public Cliente localizarCliente(String nome, int idCliente) {
 		Cliente cliente = new Cliente();
 
-		String sql;
+		String sql = "select * from " + this.schema + ".cliente";
 		ResultSet tabela;
+		tabela = conexao.query(sql);
 
 		if (nome == null) {
-			sql = "select * from " + this.schema + ".cliente where idcliente = " + idCliente;
+			sql = "select * from " + this.schema + ".cliente where idcliente = '" + idCliente + "'";
+
 		} else
 			sql = "select * from " + this.schema + ".cliente where nome = '" + nome + "'";
 
@@ -108,7 +111,11 @@ public class ClienteDAO {
 				cliente.setNome(tabela.getString("nome"));
 				cliente.setCpf(tabela.getString("cpf"));
 				cliente.setEndereco(tabela.getString("endereco"));
-				cliente.setDtNascimento(tabela.getString("dtNascimento"));
+				cliente.setDtNascimento(tabela.getString("dtnascimento"));
+				
+				System.out.printf("Nome: %s CPF: %s Endereço: %s DataNascimento: %s\n", cliente.getNome(),
+						cliente.getCpf(), cliente.getEndereco(), cliente.getDtNascimento());
+				
 			} else {
 				if (nome == null) {
 					System.out.println("IdCliente " + idCliente + " não localizado.");
@@ -140,7 +147,7 @@ public class ClienteDAO {
 			System.out.println("Quantidade de clientes: " + rowCount);
 
 			if (rowCount > 0) {
-				System.out.println("\nCódigo\tNome\t\tCPF\tdtNascimento\tEndereço");
+				System.out.println("\nCódigo\tNome\t\tCPF\t\tdtNascimento\tEndereço");
 			} else {
 				System.out.println("\nNão possui dados.");
 				return;
@@ -148,10 +155,12 @@ public class ClienteDAO {
 
 			tabela.beforeFirst();
 
+			System.out.println();
 			while (tabela.next()) {
-				System.out.printf("%s\t%-20s\t%s\t%s\n", tabela.getInt("idcliente"), tabela.getString("nome"),
-						tabela.getString("cpf"), tabela.getString("endereco"));
+				System.out.printf("%d\t%.15s\t%s\t%s\t%s\n", tabela.getInt("idcliente"), tabela.getString("nome"),
+						tabela.getString("cpf"), tabela.getString("dtnascimento"), tabela.getString("endereco"));
 			}
+			System.out.println();
 
 		} catch (Exception e) {
 			System.err.println(e);

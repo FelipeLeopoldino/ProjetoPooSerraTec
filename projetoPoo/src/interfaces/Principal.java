@@ -3,9 +3,11 @@ package interfaces;
 import java.util.Scanner;
 
 import classes.Cliente;
+import classes.Produto;
 import conexao.Conexao;
 import conexao.DadosConexao;
 import dao.ClienteDAO;
+import dao.ProdutoDAO;
 import dao.CreateDAO;
 import files.ArquivoTxt;
 
@@ -133,12 +135,72 @@ public class Principal {
 			opcao = informeOpcao("Informe uma opção: ");
 			switch (opcao) {
 			case 1:
-				localizarCliente(con);
+				localizarClientePor(con);
 				break;
 			case 2:
 				listarCliente(con);
 				break;
 			case 3:
+				menuPrincipal(con);
+				break;
+			default:
+				System.out.println("Opção inválida.");
+			}
+		} while (opcao != 4);
+	}
+
+	public static void menuProdutos(Conexao con) {
+		int opcao;
+
+		do {
+			menuCRUD();
+			opcao = informeOpcao("Informe uma opção: ");
+			switch (opcao) {
+			case 1:
+				localizarProdutoPor(con);
+				break;
+			case 2:
+				listaProdutos(con);
+				break;
+			case 3:
+				menuPrincipal(con);
+				break;
+			default:
+				System.out.println("Opção inválida.");
+			}
+		} while (opcao != 4);
+	}
+
+	public static void menuPedido(Conexao con) {
+		int opcao;
+
+		do {
+			System.out.println("0- Sair");
+			System.out.println("1- Criar Pedido");
+			System.out.println("2- Alterar Pedido");
+			System.out.println("3- Selecionar Pedido");
+			System.out.println("4- Apagar Pedido");
+			System.out.println("5- Listar Pedido");
+
+			opcao = informeOpcao("Informe uma opção: ");
+			switch (opcao) {
+			case 1:
+//				incluirPedido(con);
+				break;
+			case 2:
+//				alterarPedido(con);
+				break;
+			case 3:
+//				selecionarPedido(con);
+				break;
+			case 4:
+//				apagarPedido(con);
+				break;
+			case 5:
+//				listarPedidos(con);
+				break;
+			case 0 : 
+				menuPrincipal(con);
 				break;
 			default:
 				System.out.println("Opção inválida.");
@@ -146,23 +208,10 @@ public class Principal {
 		} while (opcao != 6);
 	}
 
-	public static void menuProdutos(Conexao con) {
-		
+	private static void listaProdutos(Conexao con) {
+		ProdutoDAO produto = new ProdutoDAO(con, SCHEMA);
+		produto.listaProdutos();
 	}
-
-	public static void menuPedido(Conexao con) {
-
-	}
-//	public static void excluirCliente(Conexao con) {
-//		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
-//
-//		int codigo = informeOpcao("\nInforme o código: ");
-//		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
-//
-//		if (cliente != null) {
-//			clienteDAO.apagarCliente(cliente.getIdCliente());
-//		}
-//	}
 
 	public static void localizarCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
@@ -177,47 +226,10 @@ public class Principal {
 		}
 	}
 
-//	public static void alterarCliente(Conexao con) {
-//		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
-//
-//		int codigo = informeOpcao("\nInforme o código: ");
-//		Cliente cliente = clienteDAO.localizarCliente(null, codigo);
-//
-//		if (cliente != null) {
-//			clienteDAO.alterarCliente(cliente);
-//		}
-//	}
-
 	public static void listarCliente(Conexao con) {
 		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
 		clienteDAO.listarClientes();
 	}
-
-//	public static void incluirCliente(Conexao con) {
-//		ClienteDAO clienteDAO = new ClienteDAO(con, SCHEMA);
-//		Cliente cliente = solicitarDadosCliente();
-//		clienteDAO.incluirCliente(cliente);
-//	}
-
-//	public static Cliente solicitarDadosCliente() {
-//		Cliente cliente = new Cliente();
-//
-//		System.out.println("\nDados do cliente");
-//		System.out.println("Informe o nome: ");
-//		String nome = input.nextLine();
-//
-//		System.out.println("Informe o CPF: ");
-//		String cpf = input.nextLine();
-//
-//		System.out.println("Informe o endereço: ");
-//		String endereco = input.nextLine();
-//
-//		cliente.setNome(nome);
-//		cliente.setCpf(cpf);
-//		cliente.setEndereco(endereco);
-//
-//		return cliente;
-//	}
 
 	public static boolean isNumeric(String str) {
 		return str != null && str.matches("[0-9.]+");
@@ -229,11 +241,11 @@ public class Principal {
 		int opcao;
 
 		do {
-			opcao = informeOpcao("Escolha como localizar");
-
 			System.out.println("1- Nome");
 			System.out.println("2- Código");
 			System.out.println("3- Voltar");
+
+			opcao = informeOpcao("Escolha como localizar");
 
 			switch (opcao) {
 			case 1:
@@ -261,4 +273,44 @@ public class Principal {
 
 		return cliente;
 	}
+
+	public static Produto localizarProdutoPor(Conexao con) {
+		ProdutoDAO produtoDao = new ProdutoDAO(con, SCHEMA);
+		Produto produto = null;
+		int opcao;
+
+		do {
+			System.out.println("1- Descrição");
+			System.out.println("2- Código");
+			System.out.println("3- Voltar");
+
+			opcao = informeOpcao("Escolha como localizar");
+
+			switch (opcao) {
+			case 1:
+				System.out.println("Informe o nome: ");
+				String descricao = input.nextLine();
+				produto = produtoDao.localizarProduto(descricao, 0);
+				if (produto == null) {
+					System.out.println("Cliente não encontrado");
+				} else
+					opcao = 3;
+				break;
+			case 2:
+				System.out.println("Informe o código: ");
+				int codigo = informeOpcao("");
+				produto = produtoDao.localizarProduto(null, codigo);
+				if (produto == null) {
+					System.out.println("Cliente não encontrado");
+				} else
+					opcao = 3;
+				break;
+			default:
+				System.out.println("Código inválido");
+			}
+		} while (opcao != 3);
+
+		return produto;
+	}
+
 }
